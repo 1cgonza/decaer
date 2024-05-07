@@ -1,0 +1,25 @@
+{
+  "name": "procesador",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "dev": " nodemon ./fuente/aplicacion.ts"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "rimraf": "^5.0.5",
+    "sass": "^1.76.0",
+    "ts-node": "^10.9.1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "./imagenes/*"
+    ],
+    "ext": "ts, js"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0",
+    "sharp": "^0.33.3",
+    "slugify": "^1.6.6"
+  }
+}
