@@ -4,18 +4,19 @@ import ffmpeg from 'ffmpeg-static';
 import { spawn } from 'child_process';
 import slug from 'slugify';
 
-const baseCapturas = 'G:/decaer/Capturas';
+const baseCapturas = 'C:/Users/enflujo/Documents/__DECAER__/Capturas';
 interface Grupo {
   nombre: string;
   ruta: string;
   efectos: string[];
-  nombreVideo: string;
 }
 
 const efectosGenerales = [
   'hflip', // invertir horizontal
   'rotate=PI:bilinear=0', // rotar 180
-  'eq=brightness=0.12:saturation=2',
+  'curves=psfile=./fuente/lobo1.acv',
+  'eq=saturation=0.5',
+  // 'eq=brightness=0.12:saturation=2',
 ];
 
 const grupos = [
@@ -23,13 +24,11 @@ const grupos = [
     nombre: 'Lobo en campo',
     ruta: join(baseCapturas, 'tinta/tinta_003.dgn/tinta_003_Take_01/tinta_003_01_X1'),
     efectos: efectosGenerales,
-    nombreVideo: 'prueba_2',
   },
   {
     nombre: 'Mirada lobo',
     ruta: join(baseCapturas, 'tinta/tinta_003.dgn/tinta_003_Take_02/tinta_003_02_X1'),
     efectos: efectosGenerales,
-    nombreVideo: 'prueba_2',
   },
 ];
 
@@ -62,12 +61,12 @@ async function procesarCarpeta(grupo: Grupo) {
       '-c:v',
       'libx264',
       '-pix_fmt',
-      'yuv420p',
+      'yuyv422',
       '-y',
       `${resolve(process.cwd(), `${nombreVideo}.mp4`)}`,
     ];
 
-    console.log(nombreVideo);
+    // console.log(nombreVideo);
     // ffmpeg -framerate 1 -pattern_type sequence -i gym%02d.jpg -s:v 1920x1080 -c:v libx264 -pix_fmt yuv420p out.mp4
 
     const { stdout, stderr } = spawn(ffmpeg, parametrosVideo);
@@ -78,9 +77,9 @@ async function procesarCarpeta(grupo: Grupo) {
     });
     console.log(parametrosVideo.join(' '));
 
-    for (const archivo of archivos) {
-      console.log(grupo.nombre, archivo);
-    }
+    // for (const archivo of archivos) {
+    //   console.log(grupo.nombre, archivo);
+    // }
   } catch (error) {
     console.error(error);
   }
